@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Sdalay_NewsBackend::menu"
+             title="News" module="Sdalay_NewsBackend"
+             sortOrder="10"
+             resource="Magento_Backend::content"
+        />
+        <add id="Sdalay_NewsBackend::newscreate"
+             title="Create news" module="Sdalay_NewsBackend"
+             sortOrder="12" parent="Sdalay_NewsBackend::menu"
+             action="news/create/index"
+             resource="Sdalay_NewsBackend::newscreate"
+        />
+        <add id="Sdalay_NewsBackend::allnews"
+             title="News List" module="Sdalay_NewsBackend"
+             sortOrder="15" parent="Sdalay_NewsBackend::menu"
+             action="news/all/index"
+             resource="Sdalay_NewsBackend::allnews"
+        />
+    </menu>
+</config>

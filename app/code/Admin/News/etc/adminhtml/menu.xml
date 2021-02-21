@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Admin_News::menu"
+             title="News" module="Admin_News"
+             sortOrder="10"
+             resource="Magento_Backend::content"
+        />
+        <add id="Admin_News::create"
+             title="Create news" module="Admin_News"
+             sortOrder="12" parent="Admin_News::menu"
+             action="news/create/index"
+             resource="Admin_News::create"
+        />
+        <add id="Admin_News::all"
+             title="News List" module="Admin_News"
+             sortOrder="15" parent="Admin_News::menu"
+             action="news/all/index"
+             resource="Admin_News::all"
+        />
+    </menu>
+</config>

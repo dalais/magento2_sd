@@ -51,11 +51,11 @@ class InstallSchema implements InstallSchemaInterface
                 ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
                 'Updated At')
             ->addColumn(
-                'moderated_at',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
-                null,
-                ['nullable' => true, 'default' => null],
-                'Moderated At');
+                'published',
+                \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                1,
+                ['nullable' => false, 'default' => false],
+                'Published');
         $setup->getConnection()->createTable($table);
 
         /**

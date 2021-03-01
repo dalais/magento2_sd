@@ -1,7 +1,7 @@
 <?php
 
-/** @var \Magento\Framework\View\Element\Template $block */
-$blogViewModel = $block->getData('viewModel')
+/** @var Magento\Framework\View\Element\Template $block */
+$blogViewModel = $block->getData('viewModel');
 ?>
 
 <div class="blog-container" data-bind="scope: 'blog'">
@@ -15,7 +15,7 @@ $blogViewModel = $block->getData('viewModel')
                     "components": {
                         "blog": {
                             "component": "Magespace_Blog/js/blog",
-                            "posts": <?= $blogViewModel->getPosts(); ?>
+                            "posts": <?= $blogViewModel->getPostsJson(); ?>
                         }
                     }
                 }

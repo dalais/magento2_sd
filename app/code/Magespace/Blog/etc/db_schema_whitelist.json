@@ -1,0 +1,19 @@
+{
+    "magespace_blog_page_post": {
+        "column": {
+            "post_id": true,
+            "page_id": true,
+            "is_post": true,
+            "author": true,
+            "published_time": true,
+            "creation_time": true
+        },
+        "index": {
+            "MAGESPACE_BLOG_PAGE_POST_PAGE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGESPACE_BLOG_PAGE_POST_PAGE_ID_CMS_PAGE_PAGE_ID": true
+        }
+    }
+}

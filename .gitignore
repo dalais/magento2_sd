@@ -84,3 +84,4 @@ atlassian*
 /generated/*
 !/generated/.htaccess
 .DS_Store
+pestle.phar

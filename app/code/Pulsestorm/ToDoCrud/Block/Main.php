@@ -9,7 +9,7 @@ class Main extends \Magento\Framework\View\Element\Template
     protected $toDoFactory;
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Pulsestorm\ToDoCrud\Model\TodoItem $toDoFactory
+        \Pulsestorm\ToDoCrud\Model\TodoItemFactory $toDoFactory
     )
     {
         $this->toDoFactory = $toDoFactory;
@@ -19,9 +19,14 @@ class Main extends \Magento\Framework\View\Element\Template
     function _prepareLayout()
     {
         $todo = $this->toDoFactory->create();
-        $todo->setData('item_text','Finish my Magento article')
-            ->save();
-        var_dump('Done');
+
+        $collection = $todo->getCollection();
+
+        foreach($collection as $item)
+        {
+            var_dump('Item ID: ' . $item->getId());
+            var_dump($item->getData());
+        }
         exit;
     }
 }

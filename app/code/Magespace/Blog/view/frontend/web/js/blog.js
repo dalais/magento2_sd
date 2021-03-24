@@ -7,6 +7,7 @@ define(['uiComponent'], function (Component) {
         },
         initialize: function () {
             this._super();
+            console.log(this)
             return this;
         },
         getDate: function (value) {

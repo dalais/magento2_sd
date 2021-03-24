@@ -70,9 +70,9 @@ class PostProvider implements ArgumentInterface
                 "id" => $post->getId(),
                 "title" => $post->getTitle(),
                 "url" => $this->url->getBaseUrl($post->getIdentifier()),
-                "published_date" => $post->getCreationTime(),
+                "published_time" => $post->getPublishedTime(),
                 "content" => $this->truncate($post->getContent(), 10),
-                "author" => "Superman"
+                "author" => $post->getAuthor()
             ];
         }
         return $result;

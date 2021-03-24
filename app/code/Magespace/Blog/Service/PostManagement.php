@@ -5,7 +5,7 @@ namespace Magespace\Blog\Service;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magespace\Blog\Api\Data\PostInterface;
 use Magespace\Blog\Api\PostManagementInterface;
-use Magespace\Blog\Model\Post as PostFactory;
+use Magespace\Blog\Model\PostFactory;
 use Magespace\Blog\Model\ResourceModel\Post as PostResource;
 
 class PostManagement implements PostManagementInterface

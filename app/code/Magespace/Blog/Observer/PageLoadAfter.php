@@ -31,15 +31,15 @@ class PageLoadAfter implements ObserverInterface
     public function execute(Observer $observer)
     {
         /** @var PageInterface|Page $entity */
-        $entity = $observer->getEvent()->getEntity();
+        $entity = $observer->getEvent()->getObject();
 
+        /** @var Post $post */
         $post = $this->postRepository->getByPageId($entity->getId());
 
         if ($post->getId()) {
             $entity->setData('author', $post->getData('author'));
-            $entity->setData('is_post', $post->getData('author'));
-            $entity->setData('author', $post->getData('author'));
-            $entity->setData('author', $post->getData('author'));
+            $entity->setData('is_post', $post->getData('is_post'));
+            $entity->setData('published_time', $post->getData('published_time'));
         }
     }
 }

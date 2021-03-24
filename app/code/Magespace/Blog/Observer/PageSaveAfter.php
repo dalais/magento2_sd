@@ -7,6 +7,7 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magespace\Blog\Api\Data\PostInterface;
 use Magespace\Blog\Api\PostManagementInterface;
+use Magespace\Blog\Api\PostRepositoryInterface;
 use Magespace\Blog\Model\Post;
 
 class PageSaveAfter implements ObserverInterface
@@ -17,12 +18,22 @@ class PageSaveAfter implements ObserverInterface
     private $postManagement;
 
     /**
+     * @var PostRepositoryInterface
+     */
+    private $postRepository;
+
+    /**
      * PageSaveAfter constructor.
      * @param PostManagementInterface $postManagement
+     * @param PostRepositoryInterface $postRepository
      */
-    public function __construct(PostManagementInterface $postManagement)
+    public function __construct(
+        PostManagementInterface $postManagement,
+        PostRepositoryInterface $postRepository
+    )
     {
         $this->postManagement = $postManagement;
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -31,16 +42,17 @@ class PageSaveAfter implements ObserverInterface
     public function execute(Observer $observer)
     {
         /** @var PageInterface $entity */
-        $entity = $observer->getEvent()->getEntity();
+        $entity = $observer->getEvent()->getObject();
         $data = $entity->getData();
 
-        /** @var PostInterface|Post $post */
-        $post = $this->postManagement->getEmptyObject();
+        $post = $this->postRepository->getByPageId($entity->getId());
 
+        if (!$post->getId()) {
+            $post->setData('page_id', $data['page_id']);
+        }
         $post->setData('author', $data['author']);
         $post->setData('is_post', $data['is_post']);
-        $post->setData('published_date', $data['published_date']);
-        $post->setData('page_id', $data['page_id']);
+        $post->setData('published_time', $data['published_time']);
 
         $this->postManagement->save($post);
     }

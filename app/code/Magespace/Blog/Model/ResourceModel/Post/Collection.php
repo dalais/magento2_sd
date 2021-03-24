@@ -2,15 +2,19 @@
 
 namespace Magespace\Blog\Model\ResourceModel\Post;
 
-use Magespace\Blog\Model\ResourceModel\Post as PostResource;
-use Magespace\Blog\Model\Post;
-use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-
-class Collection extends AbstractCollection
+/**
+ * Class Collection
+ */
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-    protected function __construct()
+    /**
+     * Init
+     */
+    protected function _construct() // phpcs:ignore PSR2.Methods.MethodDeclaration
     {
-        $this->_init(Post::class, PostResource::class);
+        $this->_init(
+            \Magespace\Blog\Model\Post::class,
+            \Magespace\Blog\Model\ResourceModel\Post::class
+        );
     }
-
 }

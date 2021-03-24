@@ -4,4 +4,12 @@
         <observer name="magespace_blog_page_after"
                   instance="Magespace\Blog\Observer\PageSaveAfter" />
     </event>
+    <event name="cms_page_load_after">
+        <observer name="magespace_blog_load_after"
+                  instance="Magespace\Blog\Observer\PageLoadAfter" />
+    </event>
+    <event name="cms_page_collection_load_after">
+        <observer name="magespace_blog_page_collection_load_after"
+                  instance="Magespace\Blog\Observer\PageCollectionLoadAfter" />
+    </event>
 </config>

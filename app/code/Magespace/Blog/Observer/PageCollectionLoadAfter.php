@@ -5,8 +5,6 @@ namespace Magespace\Blog\Observer;
 use Magento\Cms\Model\Page;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
-use Magespace\Blog\Model\Post;
-use Magespace\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 use Magespace\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
 class PageCollectionLoadAfter implements ObserverInterface

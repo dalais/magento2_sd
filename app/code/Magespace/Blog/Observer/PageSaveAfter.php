@@ -5,10 +5,8 @@ namespace Magespace\Blog\Observer;
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
-use Magespace\Blog\Api\Data\PostInterface;
 use Magespace\Blog\Api\PostManagementInterface;
 use Magespace\Blog\Api\PostRepositoryInterface;
-use Magespace\Blog\Model\Post;
 
 class PageSaveAfter implements ObserverInterface
 {

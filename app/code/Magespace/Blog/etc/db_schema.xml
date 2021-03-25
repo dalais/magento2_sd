@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="magespace_blog_page_post" resource="default" engine="innodb" comment="Magespace Blog Table">
 
-        <column xsi:type="smallint" name="post_id" unsigned="false" nullable="false" identity="false"
+        <column xsi:type="smallint" name="post_id" unsigned="true" nullable="false" identity="true"
                 comment="Post ID"/>
 
         <column xsi:type="smallint" name="page_id" unsigned="false" nullable="false" identity="false"

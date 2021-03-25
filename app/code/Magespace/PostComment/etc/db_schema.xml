@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magespace_blog_page_post_comment" resource="default" engine="innodb"
+           comment="Magespace Blog Post Comment Table">
+
+        <column xsi:type="smallint" name="comment_id" unsigned="true" nullable="false" identity="true"
+                comment="Comment ID"/>
+
+        <column xsi:type="smallint" name="post_id" unsigned="true" nullable="false" identity="false"
+                comment="Post ID"/>
+
+        <column xsi:type="text" name="content" nullable="true" comment="Content"/>
+
+        <column xsi:type="varchar" name="author" nullable="false" length="255" comment="Author"/>
+
+        <column xsi:type="timestamp" name="published_time" on_update="false" nullable="true"
+                comment="Post Comment Published Time"/>
+        <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Post Comment Creation Time"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="comment_id"/>
+            <column name="post_id"/>
+        </constraint>
+
+        <constraint xsi:type="foreign"
+                    referenceId="MAGESPACE_BLOG_PAGE_POST_COMMENT_ID_MAGESPACE_BLOG_PAGE_POST_POST_ID"
+                    table="magespace_blog_page_post_comment"
+                    column="post_id" referenceTable="magespace_blog_page_post" referenceColumn="post_id"
+                    onDelete="CASCADE"/>
+
+        <index referenceId="MAGESPACE_BLOG_PAGE_POST_POST_ID" indexType="btree">
+            <column name="post_id"/>
+        </index>
+    </table>
+</schema>

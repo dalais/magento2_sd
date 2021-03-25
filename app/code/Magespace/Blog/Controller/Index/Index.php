@@ -1,6 +1,6 @@
 <?php
 
-namespace Magespace\Blog\Controller\Blog;
+namespace Magespace\Blog\Controller\Index;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\Controller\ResultFactory;

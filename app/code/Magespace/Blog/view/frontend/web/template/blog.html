@@ -3,7 +3,7 @@
     <li class="post-container" data-bind="attr: {id: post.id}">
         <div class="post-image"></div>
         <div class="post-container__content">
-            <a href=""><h2 data-bind="text: post.title"></h2></a>
+            <a data-bind="attr:{href: post.url}"><h2 data-bind="text: post.title"></h2></a>
             <div class="post-meta">
                 <div class="column-1" data-bind="text: $parent.getDate(post.published_time)"></div>
                 <div class="column-2" data-bind="text: post.author"></div>

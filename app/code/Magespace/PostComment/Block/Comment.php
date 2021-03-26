@@ -34,7 +34,7 @@ class Comment extends Template
         return !$post->isEmpty() && $post->getData('is_post') > 0;
     }
 
-    public function getComments()
+    public function getlist()
     {
         return 'Comments';
     }

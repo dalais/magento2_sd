@@ -81,6 +81,7 @@ class PostRepository implements PostRepositoryInterface
 
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('page_id',$pageIds,'in')
+            ->addFilter('is_active',1)
             ->create();
         return $this->pageRepository->getList($searchCriteria);
     }

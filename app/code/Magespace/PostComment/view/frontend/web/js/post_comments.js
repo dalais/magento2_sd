@@ -3,7 +3,7 @@ define(['uiComponent'], function (Component) {
 
     return Component.extend({
         defaults: {
-            template: 'Magespace_Blog/comments'
+            template: 'Magespace_PostComment/post_comments'
         },
         initialize: function () {
             this._super();

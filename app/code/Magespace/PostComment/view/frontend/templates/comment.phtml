@@ -2,5 +2,22 @@
 /** @var Magento\Framework\View\Element\Template $block */
 ?>
 <?php if ($block->isPost()) : ?>
-    <h1><?php echo $block->getList(); ?></h1>
+    <div class="post-comments-container" data-bind="scope: 'post_comments'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+
+    <script type="text/x-magento-init">
+    {
+        "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "post_comments": {
+                            "component": "Magespace_PostComment/js/comment",
+                            "comments": <?= $block->getCommentsJson(); ?>
+                        }
+                    }
+                }
+             }
+    }
+    </script>
 <?php endif ?>

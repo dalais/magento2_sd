@@ -1,13 +1,11 @@
 <?php
 
-namespace Magespace\PostComment\Block;
+namespace Magespace\PostComment\ViewModel;
 
+use Magento\Cms\Api\Data\PageInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Serialize\SerializerInterface;
-use Magespace\Blog\Api\PostRepositoryInterface;
-use Magento\Framework\View\Element\Template;
-use Magento\Framework\View\Element\Template\Context;
-use Magento\Cms\Model\Page;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magespace\Blog\Model\Post;
 use Magespace\Blog\Service\PostRepository;
 use Magespace\PostComment\Api\Data\CommentInterface;
@@ -15,9 +13,10 @@ use Magespace\PostComment\Api\Data\CommentSearchResultInterface;
 use Magespace\PostComment\Model\CommentRepository;
 
 /**
- * Class Main
+ * Class CommentProvider
+ * @package Magespace\PostComment\ViewModel
  */
-class Comment extends Template
+class CommentProvider implements ArgumentInterface
 {
     /**
      * @var SerializerInterface
@@ -25,14 +24,14 @@ class Comment extends Template
     private $serializer;
 
     /**
-     * @var Page
+     * @var PostRepository
      */
-    protected $cmsPage;
+    private $postRepository;
 
     /**
-     * @var PostRepositoryInterface
+     * @var PageInterface
      */
-    protected $postRepository;
+    private $cmsPage;
 
     /**
      * @var PostRepository
@@ -45,15 +44,21 @@ class Comment extends Template
     private $searchCriteriaBuilder;
 
 
+    /**
+     * CommentProvider constructor.
+     * @param SerializerInterface $serializer
+     * @param PageInterface $cmsPage
+     * @param PostRepository $postRepository
+     * @param CommentRepository $commentRepository
+     */
     public function __construct(
         SerializerInterface $serializer,
-        Context $context,
-        Page $cmsPage,
-        PostRepositoryInterface $postRepository,
+        PageInterface $cmsPage,
+        PostRepository $postRepository,
         CommentRepository $commentRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder
-    ) {
-        parent::__construct($context);
+    )
+    {
         $this->serializer = $serializer;
         $this->cmsPage = $cmsPage;
         $this->postRepository = $postRepository;

@@ -1,0 +1,23 @@
+.post-comments-container ul {
+    margin: 0;
+    padding: 0;
+    list-style: none none;
+}
+.post-comments-container .comment-container {
+    border: 1px solid #ccc;
+}
+.post-comments-container .commentt-container .comment-container__content {
+    padding: 20px;
+}
+.post-comments-container .comment-container .comment-image {
+    min-height: 200px;
+    background: #ccc;
+}
+.post-comments-container .comment-container .comment-container__content .comment-meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.post-comments-container .comment-container .comment-container__content .comment-meta .column-1 {
+    min-width: 80%;
+}

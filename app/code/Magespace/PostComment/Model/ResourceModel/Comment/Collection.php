@@ -1,6 +1,6 @@
 <?php
 
-namespace Magespace\PostComment\Model\ResourceModel\Post;
+namespace Magespace\PostComment\Model\ResourceModel\Comment;
 
 /**
  * Class Collection

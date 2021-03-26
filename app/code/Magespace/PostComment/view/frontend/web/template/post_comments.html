@@ -1,0 +1,9 @@
+<ul>
+    <!-- ko foreach: { data: comments, as: 'comment' } -->
+    <li class="comment-container" data-bind="attr: {id: comment.id}">
+        <div class="comment-container__content">
+            <p data-bind="text: comment.content"></p>
+        </div>
+    </li>
+    <!-- /ko -->
+</ul>

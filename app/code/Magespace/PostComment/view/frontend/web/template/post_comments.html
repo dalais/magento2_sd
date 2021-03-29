@@ -1,9 +1,13 @@
-<ul>
+<div>
     <!-- ko foreach: { data: comments, as: 'comment' } -->
-    <li class="comment-container" data-bind="attr: {id: comment.id}">
+    <div class="comment-container" data-bind="attr: {id: comment.id}">
         <div class="comment-container__content">
             <p data-bind="text: comment.content"></p>
         </div>
-    </li>
+        <div class="post-meta">
+            <div data-bind="text: $parent.getDate(comment.creation_time)"></div>
+            <div data-bind="text: comment.author"></div>
+        </div>
+    </div>
     <!-- /ko -->
-</ul>
+</div>

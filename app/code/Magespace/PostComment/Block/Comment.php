@@ -93,7 +93,9 @@ class Comment extends Template
         foreach ($commentsSearchResults->getItems() as $comment) {
             $result[] = [
                 "id" => $comment->getId(),
-                "content" => $comment->getData('content')
+                "content" => $comment->getData('content'),
+                "creation_time" => $comment->getData('creation_time'),
+                "author" => "Commentator",
             ];
         }
         return $result;

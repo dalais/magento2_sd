@@ -1,21 +1,11 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+namespace Magespace\PostComment\Controller\Index;
 
-namespace Magento\Contact\Controller\Index;
-
-use Magento\Contact\Model\ConfigInterface;
-use Magento\Contact\Model\MailInterface;
+use Magento\Cms\Model\Page;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\Result\Redirect;
-use Magento\Framework\Exception\LocalizedException;
-use Magespace\PostComment\Model\CommentFactory;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Psr\Log\LoggerInterface;
+use Magespace\PostComment\Model\Comment;
 
 class Post extends \Magento\Framework\App\Action\Action
 {
@@ -25,6 +15,11 @@ class Post extends \Magento\Framework\App\Action\Action
     private $context;
 
     /**
+     * @var Page
+     */
+    private $cmsPage;
+
+    /**
      * @var JsonFactory
      */
     private $resultJsonFactory;
@@ -32,22 +27,22 @@ class Post extends \Magento\Framework\App\Action\Action
     /**
      * Post constructor.
      * @param Context $context
-     * @param CommentFactory $commentFactory
+     * @param JsonFactory $resultJsonFactory
      */
     public function __construct(
         Context $context,
-        CommentFactory $commentFactory
+        Page $cmsPage,
+        JsonFactory $resultJsonFactory
     )
     {
         parent::__construct($context);
         $this->context = $context;
-        $this->resultJsonFactory = $commentFactory;
+        $this->cmsPage = $cmsPage;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
     /**
-     * Post user comment
-     *
-     * @return Redirect
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|Redirect|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
@@ -56,13 +51,23 @@ class Post extends \Magento\Framework\App\Action\Action
         }
         $result = $this->resultJsonFactory->create();
         if ($this->getRequest()->isAjax()) {
-            $test = [
-                'Firstname' => 'What is your firstname',
-                'Email' => 'What is your emailId',
-                'Lastname' => 'What is your lastname',
-                'Country' => 'Your Country'
-            ];
-            return $result->setData($test);
+            $data = $this->getRequest()->getParams();
+            if (trim($data['content']) == '') {
+                $result->setData(['validation_error' => 'Empty message']);
+            } else {
+                /** @var Comment $comment */
+                $comment = $this->_objectManager->create('Magespace\PostComment\Model\Comment');
+                $comment->setData([
+                    'content' => $data['content'],
+                    'post_id' => $this->cmsPage->getId(),
+                    'customer_entity_id' => 1
+                ]);
+                $comment->save();
+                $result->setData([
+                    'success' => 'Your comment was sent successfully. It will be published after the moderator checks it.'
+                ]);
+            }
         }
+        return $result;
     }
 }

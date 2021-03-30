@@ -1,6 +1,9 @@
-<form data-bind="attr: {action: AjaxUrl}" method="post">
-    <textarea name="comment" id="comment-area" cols="30" rows="10"></textarea>
-    <button type="submit">
+<form id="post-comment-form">
+    <label for="comment-area"></label>
+    <div id="comment-success" style="color:red">&nbsp;</div>
+    <span id="comment-error" style="color:red">&nbsp;</span>
+    <textarea name="comment" id="comment-area"></textarea>
+    <button type="button" data-bind="click:sendComment">
         Send Comment
     </button>
 </form>

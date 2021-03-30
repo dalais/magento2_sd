@@ -13,6 +13,7 @@ use Magespace\Blog\Service\PostRepository;
 use Magespace\PostComment\Api\Data\CommentInterface;
 use Magespace\PostComment\Api\Data\CommentSearchResultInterface;
 use Magespace\PostComment\Model\CommentRepository;
+use Magento\Framework\App\Http\Context as HttpContext;
 
 /**
  * Class Main
@@ -44,6 +45,10 @@ class Comment extends Template
      */
     private $searchCriteriaBuilder;
 
+    /**
+     * @var HttpContext
+     */
+    private $httpContext;
 
     public function __construct(
         SerializerInterface $serializer,
@@ -51,8 +56,10 @@ class Comment extends Template
         Page $cmsPage,
         PostRepositoryInterface $postRepository,
         CommentRepository $commentRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        HttpContext $httpContext
     ) {
+        $this->httpContext = $httpContext;
         parent::__construct($context);
         $this->serializer = $serializer;
         $this->cmsPage = $cmsPage;
@@ -61,11 +68,22 @@ class Comment extends Template
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
+    /**
+     * @return bool
+     */
     public function isPost()
     {
         /** @var Post $post */
         $post = $this->postRepository->getByPageId($this->cmsPage->getId());
         return !$post->isEmpty() && $post->getData('is_post') > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCustomerLoggedIn()
+    {
+        return (bool)$this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
     }
 
     /**

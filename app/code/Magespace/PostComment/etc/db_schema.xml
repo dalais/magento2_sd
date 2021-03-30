@@ -10,9 +10,10 @@
         <column xsi:type="smallint" name="post_id" unsigned="true" nullable="false" identity="false"
                 comment="Post ID"/>
 
-        <column xsi:type="text" name="content" nullable="true" comment="Content"/>
+        <column xsi:type="int" name="customer_entity_id" unsigned="true" nullable="false" identity="false"
+                comment="Customer Entity ID"/>
 
-        <column xsi:type="varchar" name="author" nullable="false" length="255" comment="Author"/>
+        <column xsi:type="text" name="content" nullable="true" comment="Content"/>
 
         <column xsi:type="timestamp" name="published_time" on_update="false" nullable="true"
                 comment="Post Comment Published Time"/>
@@ -22,6 +23,7 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="comment_id"/>
             <column name="post_id"/>
+            <column name="customer_entity_id"/>
         </constraint>
 
         <constraint xsi:type="foreign"
@@ -30,8 +32,17 @@
                     column="post_id" referenceTable="magespace_blog_page_post" referenceColumn="post_id"
                     onDelete="CASCADE"/>
 
+        <constraint xsi:type="foreign"
+                    referenceId="MAGESPACE_BLOG_PAGE_POST_COMMENT_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="magespace_blog_page_post_comment"
+                    column="customer_entity_id" referenceTable="customer_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+
         <index referenceId="MAGESPACE_BLOG_PAGE_POST_POST_ID" indexType="btree">
             <column name="post_id"/>
+        </index>
+        <index referenceId="MAGESPACE_BLOG_PAGE_POST_COMMENT_CUSTOMER_ENTITY_ID" indexType="btree">
+            <column name="customer_entity_id"/>
         </index>
     </table>
 </schema>

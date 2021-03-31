@@ -21,3 +21,17 @@
 .blog-container .post-container .post-container__content .post-meta .column-1 {
     min-width: 80%;
 }
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination .active {
+    color: dodgerblue;
+}

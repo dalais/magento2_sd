@@ -47,8 +47,12 @@ class Get implements \Magento\Framework\App\Action\HttpGetActionInterface
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
+
+        $page = $this->context->getRequest()->getParam('page') ?? 1;
+        $limit = $this->context->getRequest()->getParam('limit') ?? 2;
+        $total = $this->postRepository->get()->getTotalCount();
         /** @var PageSearchResultsInterface $postRepository */
-        $postRepository = $this->postRepository->get($this->context->getRequest()->getParam('page'));
+        $postRepository = $this->postRepository->getPaginated($page,$limit);
         $resultData = [];
         /** @var PageInterface $post */
         foreach ($postRepository->getItems() as $post) {
@@ -61,7 +65,12 @@ class Get implements \Magento\Framework\App\Action\HttpGetActionInterface
                 "author" => $post->getAuthor()
             ];
         }
-        $result->setData($resultData);
+        $result->setData([
+            'data' => $resultData,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total
+        ]);
         return $result;
     }
 

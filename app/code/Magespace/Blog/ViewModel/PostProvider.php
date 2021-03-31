@@ -51,9 +51,9 @@ class PostProvider implements ArgumentInterface
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getPostsJson(int $page = 1): string
+    public function getPostsJson(): string
     {
-        $postsSearchResults = $this->postRepository->get($page);
+        $postsSearchResults = $this->postRepository->get();
         return $this->serializer->serialize($this->getPosts($postsSearchResults));
     }
 

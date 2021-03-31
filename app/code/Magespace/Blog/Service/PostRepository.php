@@ -67,12 +67,39 @@ class PostRepository implements PostRepositoryInterface
      * @return \Magento\Cms\Api\Data\PageSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function get(int $curPage = 1)
+    public function get()
     {
         $postCollection = $this->postCollectionFactory->create();
-        $postCollection->setPageSize(10);
-        $postCollection->setCurPage($curPage);
         $postCollection->addFieldToFilter('is_post',['eq' => 1]);
+
+        $pageIds = [];
+
+        /** @var Post $post */
+        foreach ($postCollection->getItems() as $post) {
+            $pageIds[] = $post->getData('page_id');
+        }
+
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter('page_id',$pageIds,'in')
+            ->addFilter('is_active',1)
+            ->create();
+        return $this->pageRepository->getList($searchCriteria);
+    }
+
+    /**
+     * @param int $page
+     * @param int $limit
+     * @return \Magento\Cms\Api\Data\PageSearchResultsInterface|PostInterface[]
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getPaginated(int $page = 1, int $limit = 0)
+    {
+        $postCollection = $this->postCollectionFactory->create();
+        $postCollection->addFieldToFilter('is_post',['eq' => 1]);
+
+        $postCollection->setCurPage($page);
+        $postCollection->setPageSize($limit);
+
 
         $pageIds = [];
 

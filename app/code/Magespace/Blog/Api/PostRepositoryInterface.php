@@ -11,9 +11,14 @@ use Magespace\Blog\Api\Data\PostInterface;
 interface PostRepositoryInterface
 {
     /**
-     * @return PostInterface
+     * @return PostInterface[]
      */
-    public function get(int $page = 1);
+    public function get();
+
+    /**
+     * @return PostInterface[]
+     */
+    public function getPaginated(int $page = 1, int $limit = 0);
 
     /**
      * @param int $pageId

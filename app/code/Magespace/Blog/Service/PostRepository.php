@@ -67,9 +67,11 @@ class PostRepository implements PostRepositoryInterface
      * @return \Magento\Cms\Api\Data\PageSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function get()
+    public function get(int $curPage = 1)
     {
         $postCollection = $this->postCollectionFactory->create();
+        $postCollection->setPageSize(10);
+        $postCollection->setCurPage($curPage);
         $postCollection->addFieldToFilter('is_post',['eq' => 1]);
 
         $pageIds = [];

@@ -9,8 +9,6 @@
         <div class="post-comments-container" data-bind="scope: 'post_comments'">
             <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
-        <hr>
-        <br>
         <div class="comment-form-container" data-bind="scope: 'comment_form'">
             <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
@@ -37,7 +35,8 @@
                         "Magento_Ui/js/core/app": {
                             "components": {
                                 "comment_form": {
-                                    "component": "Magespace_PostComment/js/comment_form"
+                                    "component": "Magespace_PostComment/js/comment_form",
+                                    "post_id": <?= $block->getPostId() ?>
                                 }
                             }
                         }

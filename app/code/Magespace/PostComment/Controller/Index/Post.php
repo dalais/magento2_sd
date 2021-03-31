@@ -1,13 +1,15 @@
 <?php
+
 namespace Magespace\PostComment\Controller\Index;
 
-use Magento\Cms\Model\Page;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magespace\PostComment\Api\CommentRepositoryInterface;
+use Magespace\PostComment\Api\Data\CommentInterfaceFactory;
 use Magespace\PostComment\Model\Comment;
 
-class Post extends \Magento\Framework\App\Action\Action
+class Post implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
     /**
      * @var Context
@@ -15,14 +17,19 @@ class Post extends \Magento\Framework\App\Action\Action
     private $context;
 
     /**
-     * @var Page
-     */
-    private $cmsPage;
-
-    /**
      * @var JsonFactory
      */
     private $resultJsonFactory;
+
+    /**
+     * @var CommentRepositoryInterface
+     */
+    protected $commentRepository;
+
+    /**
+     * @var CommentInterfaceFactory
+     */
+    protected $commentFactory;
 
     /**
      * Post constructor.
@@ -31,14 +38,15 @@ class Post extends \Magento\Framework\App\Action\Action
      */
     public function __construct(
         Context $context,
-        Page $cmsPage,
-        JsonFactory $resultJsonFactory
+        JsonFactory $resultJsonFactory,
+        CommentRepositoryInterface $commentRepository,
+        CommentInterfaceFactory $commentFactory
     )
     {
-        parent::__construct($context);
         $this->context = $context;
-        $this->cmsPage = $cmsPage;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->commentRepository = $commentRepository;
+        $this->commentFactory = $commentFactory;
     }
 
     /**
@@ -46,23 +54,20 @@ class Post extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        if (!$this->getRequest()->isPost()) {
-            return $this->resultRedirectFactory->create()->setPath('*/*/');
-        }
         $result = $this->resultJsonFactory->create();
-        if ($this->getRequest()->isAjax()) {
-            $data = $this->getRequest()->getParams();
+        if ($this->context->getRequest()->isAjax()) {
+            $data = $this->context->getRequest()->getParams();
             if (trim($data['content']) == '') {
-                $result->setData(['validation_error' => 'Empty message']);
+                $result->setData(['validation_error' => 'Please! Write your comment']);
             } else {
-                /** @var Comment $comment */
-                $comment = $this->_objectManager->create('Magespace\PostComment\Model\Comment');
-                $comment->setData([
+                /** @var Comment $commentFactory */
+                $commentFactory = $this->commentFactory->create();
+                $commentFactory->setData([
                     'content' => $data['content'],
-                    'post_id' => $this->cmsPage->getId(),
+                    'post_id' => $data['post_id'],
                     'customer_entity_id' => 1
                 ]);
-                $comment->save();
+                $this->commentRepository->save($commentFactory);
                 $result->setData([
                     'success' => 'Your comment was sent successfully. It will be published after the moderator checks it.'
                 ]);

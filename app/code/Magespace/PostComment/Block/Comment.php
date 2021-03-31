@@ -2,6 +2,7 @@
 
 namespace Magespace\PostComment\Block;
 
+use Magento\Cms\Api\Data\PageInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magespace\Blog\Api\PostRepositoryInterface;
@@ -9,10 +10,9 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Cms\Model\Page;
 use Magespace\Blog\Model\Post;
-use Magespace\Blog\Service\PostRepository;
+use Magespace\PostComment\Api\CommentRepositoryInterface;
 use Magespace\PostComment\Api\Data\CommentInterface;
 use Magespace\PostComment\Api\Data\CommentSearchResultInterface;
-use Magespace\PostComment\Model\CommentRepository;
 use Magento\Framework\App\Http\Context as HttpContext;
 
 /**
@@ -36,7 +36,7 @@ class Comment extends Template
     protected $postRepository;
 
     /**
-     * @var PostRepository
+     * @var CommentRepositoryInterface
      */
     private $commentRepository;
 
@@ -53,9 +53,9 @@ class Comment extends Template
     public function __construct(
         SerializerInterface $serializer,
         Context $context,
-        Page $cmsPage,
+        PageInterface $cmsPage,
         PostRepositoryInterface $postRepository,
-        CommentRepository $commentRepository,
+        CommentRepositoryInterface $commentRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         HttpContext $httpContext
     ) {
@@ -87,6 +87,16 @@ class Comment extends Template
     }
 
     /**
+     * @return int
+     */
+    public function getPostId(): int
+    {
+        /** @var Post $post */
+        $post = $this->postRepository->getByPageId($this->cmsPage->getId());
+        return $post->getId();
+    }
+
+    /**
      * @return string
      */
     public function getCommentsJson(): string
@@ -95,6 +105,7 @@ class Comment extends Template
         $post = $this->postRepository->getByPageId($this->cmsPage->getId());
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('post_id', $post->getId(), '=')
+            ->addFilter('published_time', 'NULL', 'IS NOT')
             ->create();
         return $this->serializer->serialize($this->getComments($this->commentRepository->getList($searchCriteria)));
     }

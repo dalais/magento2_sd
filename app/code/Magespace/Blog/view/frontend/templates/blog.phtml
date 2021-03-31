@@ -1,8 +1,7 @@
 <?php
 
 /** @var Magento\Framework\View\Element\Template $block */
-$blogViewModel = $block->getData('viewModel');
-$page = $block->getRequest()->getParam('page');
+$page = $block->getRequest()->getParam('page') ?? 1;
 ?>
 
 <div class="blog-container" data-bind="scope: 'blog'">
@@ -16,7 +15,8 @@ $page = $block->getRequest()->getParam('page');
                     "components": {
                         "blog": {
                             "component": "Magespace_Blog/js/blog",
-                            "posts": <?= $blogViewModel->getPostsJson($page); ?>
+                            "posts": [],
+                            "page": <?= $page ?>
                         }
                     }
                 }

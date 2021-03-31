@@ -13,19 +13,17 @@ define([
 ) {
     'use strict';
 
-    let postId = null;
     return Component.extend({
         defaults: {
             template: 'Magespace_PostComment/comment_form'
         },
-        initialize(config) {
+        initialize() {
             this._super();
-            postId = config.post_id
             return this;
         },
         sendComment() {
             $.ajax({
-                url: "/comment/index/post/post_id/"+postId,
+                url: "/comment/index/post/post_id/"+this.post_id,
                 method: 'POST',
                 data:{
                     content: document.getElementById('comment-area').value

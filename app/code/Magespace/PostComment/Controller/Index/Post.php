@@ -58,7 +58,7 @@ class Post implements \Magento\Framework\App\Action\HttpPostActionInterface
         if ($this->context->getRequest()->isAjax()) {
             $data = $this->context->getRequest()->getParams();
             if (trim($data['content']) == '') {
-                $result->setData(['validation_error' => 'Please! Write your comment']);
+                $result->setData(['validation_error' => 'Please! Write your comment.']);
             } else {
                 /** @var Comment $commentFactory */
                 $commentFactory = $this->commentFactory->create();

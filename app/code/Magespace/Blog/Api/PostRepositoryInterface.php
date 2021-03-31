@@ -13,7 +13,7 @@ interface PostRepositoryInterface
     /**
      * @return PostInterface
      */
-    public function get();
+    public function get(int $page = 1);
 
     /**
      * @param int $pageId

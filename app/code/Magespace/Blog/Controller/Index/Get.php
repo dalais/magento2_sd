@@ -69,7 +69,8 @@ class Get implements \Magento\Framework\App\Action\HttpGetActionInterface
             'data' => $resultData,
             'page' => $page,
             'limit' => $limit,
-            'total' => $total
+            'total' => $total,
+            'num_pages' => ceil($total/$limit)
         ]);
         return $result;
     }

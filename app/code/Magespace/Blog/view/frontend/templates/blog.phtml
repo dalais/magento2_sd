@@ -2,6 +2,7 @@
 
 /** @var Magento\Framework\View\Element\Template $block */
 $page = $block->getRequest()->getParam('page') ?? 1;
+$blogViewModel = $block->getData('viewModel');
 ?>
 
 <div class="blog-container" data-bind="scope: 'blog'">
@@ -16,8 +17,7 @@ $page = $block->getRequest()->getParam('page') ?? 1;
                         "blog": {
                             "component": "Magespace_Blog/js/blog",
                             "posts": [],
-                            "limit": 0,
-                            "total": 0,
+                            "total": <?= $blogViewModel->getTotalPostsCount() ?>,
                             "page": <?= $page ?>
                         }
                     }

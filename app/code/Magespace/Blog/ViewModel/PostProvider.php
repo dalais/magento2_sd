@@ -47,6 +47,15 @@ class PostProvider implements ArgumentInterface
     }
 
     /**
+     * @return int
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getTotalPostsCount(): int
+    {
+        return $this->postRepository->get()->getTotalCount();
+    }
+
+    /**
      * @param int $page
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException

@@ -13,6 +13,9 @@
                 <block name="magespace.blog.blog"
                        class="Magento\Framework\View\Element\Template"
                        template="Magespace_Blog::blog.phtml">
+                    <arguments>
+                        <argument name="viewModel" xsi:type="object">Magespace\Blog\ViewModel\PostProvider</argument>
+                    </arguments>
                 </block>
         </referenceBlock>
     </body>

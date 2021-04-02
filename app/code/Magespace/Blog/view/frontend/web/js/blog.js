@@ -52,15 +52,15 @@ define([
             this.posts(res.data);
         },
 
-        prevNextBtns: () => {
-            let btn_prev = document.getElementById("btn_prev");
-            let btn_next = document.getElementById("btn_next");
-
+        preparePager: () => {
             if (page < 2) {
-                btn_prev.style.visibility = 'hidden';
+                self.statePrevNxtBtns('btn_prev')
             }
             if (numPages === 1 || page === numPages || page > numPages) {
-                btn_next.style.visibility = 'hidden';
+                self.statePrevNxtBtns('btn_prev')
+            }
+            if (numPages <= 1) {
+                document.getElementsByClassName('pagination')[0].setAttribute('style','display:none')
             }
         },
 
@@ -69,6 +69,7 @@ define([
                 page--;
                 self.changePage(page);
                 self.getPosts(page);
+                self.urlState();
             }
         },
 
@@ -77,6 +78,7 @@ define([
                 page++;
                 self.changePage(page);
                 self.getPosts(page);
+                self.urlState();
             }
         },
 
@@ -104,13 +106,11 @@ define([
 
         statePrevNxtBtns: (id,command) => {
             let btn = document.getElementById(id);
-            console.log(btn)
-            if (command !== '') {
-                btn.style.visibility = 'visible';
-            } else {
+            if (command === undefined) {
                 btn.style.visibility = 'hidden';
+            } else {
+                btn.style.visibility = 'visible';
             }
-            console.log(btn)
         },
 
         getQuery: (page) => {
@@ -144,27 +144,39 @@ define([
             return arr;
         },
 
-        pageBtn: (pageNum) => {
-            let pageNumber = 1;
-            if (pageNum) {
-                pageNumber = pageNum;
-            }
+        pageBtn: (e,pageNumber) => {
             self.getPosts(pageNumber);
             if (pageNumber === 1) {
                 self.urlState('');
                 self.statePrevNxtBtns('btn_prev')
+                if (numPages > 1) {
+                    self.statePrevNxtBtns('btn_next','show')
+                }
             }
             if (pageNumber > 1) {
                 self.urlState('?page='+pageNumber);
             }
             if (pageNumber > 1 && pageNumber === numPages) {
                 self.statePrevNxtBtns('btn_next')
+                self.statePrevNxtBtns('btn_prev','show')
             }
         },
 
         urlState: (params) => {
-            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + params;
-            window.history.pushState({path:newurl},'',newurl);
+            if (params !== undefined) {
+                let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + params;
+                window.history.pushState({path:newurl},'',newurl);
+            } else {
+                if (page > 1) {
+                    let newurl = window.location.protocol + "//"
+                        + window.location.host
+                        + window.location.pathname + '?page='+page;
+                    window.history.pushState({path:newurl},'',newurl);
+                } else {
+                    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.pushState({path:newurl},'',newurl);
+                }
+            }
         }
     });
 });

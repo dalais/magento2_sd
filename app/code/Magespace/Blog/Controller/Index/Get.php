@@ -49,7 +49,7 @@ class Get implements \Magento\Framework\App\Action\HttpGetActionInterface
         $result = $this->resultJsonFactory->create();
 
         $page = $this->context->getRequest()->getParam('page') ?? 1;
-        $limit = $this->context->getRequest()->getParam('limit') ?? 2;
+        $limit = $this->context->getRequest()->getParam('limit') ?? 10;
         $total = $this->postRepository->get()->getTotalCount();
         /** @var PageSearchResultsInterface $postRepository */
         $postRepository = $this->postRepository->getPaginated($page,$limit);

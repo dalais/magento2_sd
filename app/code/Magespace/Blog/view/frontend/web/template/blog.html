@@ -15,12 +15,12 @@
 </ul>
 <br>
 <br>
-<div class="pagination" data-bind="afterRender: prevNextBtns()">
+<div class="pagination" data-bind="afterRender: preparePager()">
     <button class="page-btn" id="btn_prev" data-bind="click:prevPage">Prev</button>
     <!-- ko foreach: {data: blogPages, as: 'pageNum' } -->
         <button class="page-btn"
                 data-bind="
-                click: $parent.pageBtn(pageNum),
+                click: $parent.pageBtn.bind($data,event, pageNum),
                 text:pageNum,
                 attr:{'id': 'page__'+pageNum}">
         </button>

@@ -35,3 +35,7 @@
 .pagination .active {
     color: dodgerblue;
 }
+
+.pagination .page-btn {
+    padding: 4px 14px
+}

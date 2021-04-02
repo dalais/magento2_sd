@@ -13,8 +13,17 @@
     </li>
     <!-- /ko -->
 </ul>
+<br>
+<br>
 <div class="pagination" data-bind="afterRender: prevNextBtns()">
-    <a id="btn_prev" data-bind="click:prevPage">Prev</a>
-    <a href="#" class="active">1</a>
-    <a id="btn_next" data-bind="click:nextPage">Next</a>
+    <button class="page-btn" id="btn_prev" data-bind="click:prevPage">Prev</button>
+    <!-- ko foreach: {data: blogPages, as: 'pageNum' } -->
+        <button class="page-btn"
+                data-bind="
+                click: $parent.pageBtn(pageNum),
+                text:pageNum,
+                attr:{'id': 'page__'+pageNum}">
+        </button>
+    <!-- /ko -->
+    <button class="page-btn" id="btn_next" data-bind="click:nextPage">Next</button>
 </div>

@@ -26,9 +26,10 @@ class Get implements \Magento\Framework\App\Action\HttpGetActionInterface
     protected $postRepository;
 
     /**
-     * Post constructor.
+     * Get constructor.
      * @param Context $context
      * @param JsonFactory $resultJsonFactory
+     * @param PostRepositoryInterface $postRepository
      */
     public function __construct(
         Context $context,

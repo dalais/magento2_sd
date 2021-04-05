@@ -3,4 +3,17 @@
     <preference for="Magespace\PostComment\Api\Data\CommentInterface" type="Magespace\PostComment\Model\Comment" />
     <preference for="Magespace\PostComment\Api\Data\CommentSearchResultInterface" type="Magespace\PostComment\Model\CommentSearchResult" />
     <preference for="Magespace\PostComment\Api\CommentRepositoryInterface" type="Magespace\PostComment\Model\CommentRepository" />
+    <virtualType name="Magespace\PostComment\Model\ResourceModel\Comment\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magespace_blog_page_post_comment</argument>
+            <argument name="resourceModel" xsi:type="string">Magespace\PostComment\Model\ResourceModel\Comment</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="comment_item_list_data_source" xsi:type="string">Magespace\PostComment\Model\ResourceModel\Comment\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

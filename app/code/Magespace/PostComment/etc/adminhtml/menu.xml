@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Magespace_PostComment::comment"
+            title="Comments"
+            translate="title"
+            module="Magespace_PostComment"
+            sortOrder="0"
+            parent="Magento_Backend::content_elements"
+            action="comment/index"
+            resource="Magespace_PostComment::comment"
+        />
+    </menu>
+</config>

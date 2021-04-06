@@ -103,10 +103,11 @@ class Comment extends Template
     {
         /** @var Post $post */
         $post = $this->postRepository->getByPageId($this->cmsPage->getId());
-        $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter('post_id', $post->getId(), '=')
-            ->addFilter('published_time', 'NULL', 'IS NOT')
-            ->create();
+        $this->searchCriteriaBuilder
+            ->addFilter('post_id', $post->getId());
+        $this->searchCriteriaBuilder
+            ->addFilter('published_time','NULL','neq');
+        $searchCriteria = $this->searchCriteriaBuilder->create();
         return $this->serializer->serialize($this->getComments($this->commentRepository->getList($searchCriteria)));
     }
 

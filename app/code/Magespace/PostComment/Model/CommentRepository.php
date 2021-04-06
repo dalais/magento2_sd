@@ -63,7 +63,7 @@ class CommentRepository implements CommentRepositoryInterface
         $student = $this->commentFactory->create();
         $this->commentResource->load($student, $id);
         if (!$student->getId()) {
-            throw new NoSuchEntityException(__('Unable to find Student with ID "%1"', $id));
+            throw new NoSuchEntityException(__('Unable to find Comment with ID "%1"', $id));
         }
         return $student;
     }
@@ -87,7 +87,7 @@ class CommentRepository implements CommentRepositoryInterface
     public function delete(CommentInterface $comment)
     {
         try {
-            $this->commentResource->delete($student);
+            $this->commentResource->delete($comment);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(
                 __('Could not delete the entry: %1', $exception->getMessage())

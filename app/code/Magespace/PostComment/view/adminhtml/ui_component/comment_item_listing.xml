@@ -25,11 +25,34 @@
         </argument>
     </dataSource>
     <listingToolbar name="listing_top">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="sticky" xsi:type="boolean">true</item>
-            </item>
-        </argument>
+        <massaction name="listing_massaction">
+            <action name="comment_publish">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">comment_publish</item>
+                        <item name="label" xsi:type="string" translate="true">Publish</item>
+                        <item name="url" xsi:type="url" path="comment/index/massPublish"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Publish Comment(s)</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan\'t to publish selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="comment_unpublish">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">comment_unpublish</item>
+                        <item name="label" xsi:type="string" translate="true">Unpublish</item>
+                        <item name="url" xsi:type="url" path="comment/index/massUnpublish"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Unpublish Comment(s)</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan\'t to unpublish selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <filterSearch name="fulltext"/>

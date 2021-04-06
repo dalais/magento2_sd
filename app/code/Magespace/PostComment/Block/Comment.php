@@ -3,6 +3,7 @@
 namespace Magespace\PostComment\Block;
 
 use Magento\Cms\Api\Data\PageInterface;
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magespace\Blog\Api\PostRepositoryInterface;
@@ -41,6 +42,11 @@ class Comment extends Template
     private $commentRepository;
 
     /**
+     * @var CustomerRepositoryInterface
+     */
+    private $customerRepository;
+
+    /**
      * @var SearchCriteriaBuilder
      */
     private $searchCriteriaBuilder;
@@ -56,6 +62,7 @@ class Comment extends Template
         PageInterface $cmsPage,
         PostRepositoryInterface $postRepository,
         CommentRepositoryInterface $commentRepository,
+        CustomerRepositoryInterface $customerRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         HttpContext $httpContext
     ) {
@@ -65,6 +72,7 @@ class Comment extends Template
         $this->cmsPage = $cmsPage;
         $this->postRepository = $postRepository;
         $this->commentRepository = $commentRepository;
+        $this->customerRepository = $customerRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
@@ -121,11 +129,12 @@ class Comment extends Template
 
         /** @var CommentInterface $comment */
         foreach ($commentsSearchResults->getItems() as $comment) {
+            $customer = $this->customerRepository->getById($comment->getData('customer_entity_id'));
             $result[] = [
                 "id" => $comment->getId(),
                 "content" => $comment->getData('content'),
                 "creation_time" => $comment->getData('creation_time'),
-                "author" => "Commentator",
+                "author" => $customer->getFirstname().' '.$customer->getLastname()
             ];
         }
         return $result;
